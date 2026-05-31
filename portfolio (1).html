@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Kanon Oishi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14; --surface: #161923; --surface2: #1e2434;
+    --border: rgba(255,255,255,0.07); --border-hover: rgba(255,255,255,0.15);
+    --text: #e8ecf5; --text-muted: #7a849a; --text-dim: #4a5368;
+    --accent: #5b8af0; --accent2: #3ecfa8;
+    --tag-bg: rgba(91,138,240,0.12); --tag-text: #7da4f5;
+    --mono: 'DM Mono', monospace; --sans: 'DM Sans', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(91,138,240,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(91,138,240,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(13,15,20,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); letter-spacing: 0.05em; }
+  .nav-right { display: flex; align-items: center; gap: 2rem; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 14px; color: var(--text-muted); text-decoration: none; font-family: var(--mono); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  .lang-switch { display: flex; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .lang-btn { font-family: var(--mono); font-size: 12px; padding: 4px 12px; cursor: pointer; background: transparent; border: none; color: var(--text-muted); transition: all 0.15s; letter-spacing: 0.05em; }
+  .lang-btn.active { background: var(--accent); color: #fff; }
+  .lang-btn:not(.active):hover { color: var(--text); }
+
+  main { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 5rem 0; }
+  #hero { padding-top: 7rem; padding-bottom: 4rem; }
+  .hero-label { font-family: var(--mono); font-size: 12px; color: var(--accent2); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.2rem; }
+  .hero-name { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.3rem; color: var(--text); }
+  .hero-name span { color: var(--accent); font-weight: 500; }
+  .hero-title { font-family: var(--mono); font-size: 15px; color: var(--text-muted); margin-bottom: 2rem; line-height: 1.8; }
+  .hero-bio { max-width: 560px; font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 2.5rem; }
+  .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; border-radius: 6px; font-size: 14px; font-family: var(--mono); text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #7aa0f7; }
+  .btn-outline { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+  .btn-outline:hover { color: var(--text); border-color: var(--border-hover); background: var(--surface); }
+
+  .section-heading { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; }
+  .section-heading h2 { font-size: 13px; font-family: var(--mono); font-weight: 400; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .skill-cell { background: var(--surface); padding: 1.2rem 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; transition: background 0.2s; }
+  .skill-cell:hover { background: var(--surface2); }
+  .skill-category { font-family: var(--mono); font-size: 11px; color: var(--accent2); letter-spacing: 0.1em; text-transform: uppercase; }
+  .skill-items { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+  .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.8rem; }
+  .project-card:hover { border-color: var(--border-hover); background: var(--surface2); transform: translateY(-2px); }
+  .project-number { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.04em; }
+  .project-title { font-size: 16px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .project-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; flex: 1; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
+  .tag { font-family: var(--mono); font-size: 11px; padding: 3px 10px; border-radius: 4px; background: var(--tag-bg); color: var(--tag-text); letter-spacing: 0.03em; }
+  .project-arrow { font-family: var(--mono); font-size: 12px; color: var(--accent); margin-top: 0.5rem; }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; padding: 2rem; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--surface); border: 1px solid var(--border-hover); border-radius: 14px; max-width: 680px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 2.5rem; position: relative; }
+  .modal-close { position: absolute; top: 1.2rem; right: 1.2rem; background: var(--surface2); border: 1px solid var(--border); color: var(--text-muted); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-family: var(--sans); }
+  .modal-close:hover { color: var(--text); border-color: var(--border-hover); }
+  .modal-label { font-family: var(--mono); font-size: 11px; color: var(--accent2); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.8rem; }
+  .modal-title { font-size: 22px; font-weight: 500; color: var(--text); line-height: 1.3; margin-bottom: 1.5rem; }
+  .modal-section-title { font-family: var(--mono); font-size: 12px; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; margin-top: 1.5rem; }
+  .modal-text { font-size: 15px; color: var(--text-muted); line-height: 1.8; }
+  .modal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
+  .modal-links { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.8rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+  #contact { padding-bottom: 6rem; }
+  .contact-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 3rem; text-align: center; }
+  .contact-box h3 { font-size: 22px; font-weight: 400; margin-bottom: 0.8rem; }
+  .contact-box p { color: var(--text-muted); font-size: 15px; margin-bottom: 2rem; }
+  .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 1.5rem 2rem; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Kanon Oishi</div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#skills" data-i18n="nav_skills"></a></li>
+      <li><a href="#projects" data-i18n="nav_projects"></a></li>
+      <li><a href="#contact" data-i18n="nav_contact"></a></li>
+    </ul>
+    <div class="lang-switch">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ja')">JA</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section id="hero">
+    <div class="hero-label" data-i18n="hero_label"></div>
+    <h1 class="hero-name">Kanon <span>Oishi</span></h1>
+    <div class="hero-title" data-i18n="hero_title"></div>
+    <p class="hero-bio" data-i18n="hero_bio"></p>
+    <div class="hero-links">
+      <a href="#projects" class="btn btn-primary" data-i18n="hero_cta"></a>
+      <a href="mailto:peace.inbox01@gmail.com" class="btn btn-outline" data-i18n="hero_contact"></a>
+      <a href="https://github.com/why314-pixel" class="btn btn-outline" target="_blank">GitHub</a>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-heading"><h2 data-i18n="nav_skills"></h2></div>
+    <div class="skills-grid">
+      <div class="skill-cell">
+        <div class="skill-category" data-i18n="skill_prog"></div>
+        <div class="skill-items">Python · SQL · R · HTML/CSS</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-category" data-i18n="skill_ml"></div>
+        <div class="skill-items">pandas · scikit-learn · NumPy</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-category" data-i18n="skill_viz"></div>
+        <div class="skill-items">Matplotlib · Seaborn · Plotly · Tableau</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-category" data-i18n="skill_other"></div>
+        <div class="skill-items">Jupyter · Google Colab · Excel</div>
+      </div>
+      <div class="skill-cell">
+        <div class="skill-category" data-i18n="skill_lang"></div>
+        <div class="skill-items" data-i18n="skill_lang_items"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-heading"><h2 data-i18n="nav_projects"></h2></div>
+    <div class="projects-grid" id="projects-grid"></div>
+  </section>
+
+  <section id="contact">
+    <div class="section-heading"><h2 data-i18n="nav_contact"></h2></div>
+    <div class="contact-box">
+      <h3 data-i18n="contact_title"></h3>
+      <p data-i18n="contact_desc"></p>
+      <div class="contact-links">
+        <a href="mailto:peace.inbox01@gmail.com" class="btn btn-primary" data-i18n="contact_email"></a>
+        <a href="https://www.linkedin.com/in/kanon-oishi/" class="btn btn-outline" target="_blank">LinkedIn</a>
+        <a href="https://github.com/why314-pixel" class="btn btn-outline" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Built with HTML · © 2026 Kanon Oishi
+</footer>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal" id="modal-content">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ── UI テキスト ──────────────────────────────────────────────
+const i18n = {
+  en: {
+    nav_skills: "skills",
+    nav_projects: "projects",
+    nav_contact: "contact",
+    hero_label: "Data Analytics · Engineering Systems",
+    hero_title: "// Singapore University of Technology and Design (SUTD)\n// Major: Engineering Systems and Design",
+    hero_bio: "I am an Engineering Systems and Design student at SUTD with interests in data analytics, optimization, and business problem solving. Through academic and industry projects, I have worked on transforming real-world data into business-focused insights.",
+    hero_cta: "Projects →",
+    hero_contact: "Contacts",
+    skill_prog: "Programming Languages",
+    skill_ml: "Analytics · ML",
+    skill_viz: "Visualisation",
+    skill_other: "Others",
+    skill_lang: "Languages",
+    skill_lang_items: "Japanese (Native) · English (Business) · Mandarin (Basic)",
+    contact_title: "Get in Touch",
+    contact_desc: "Please feel free to contact me regarding internships, projects, or other opportunities.",
+    contact_email: "Send an email",
+    modal_overview: "Project Overview",
+    modal_challenge: "Challenges & Approach",
+    modal_result: "Outcomes",
+    modal_tech: "Technology Used",
+    card_detail: "See detail →",
+  },
+  ja: {
+    nav_skills: "スキル",
+    nav_projects: "プロジェクト",
+    nav_contact: "お問い合わせ",
+    hero_label: "データアナリティクス · エンジニアリングシステム",
+    hero_title: "// シンガポール工科デザイン大学（SUTD）\n// 専攻：エンジニアリングシステムデザイン",
+    hero_bio: "SUTDでエンジニアリングシステムとデザインを専攻しています。データアナリティクス・最適化・ビジネス課題の解決に興味があり、学術・産学連携プロジェクトを通じて、実データをビジネスに活かすインサイトの導出に取り組んできました。",
+    hero_cta: "プロジェクトを見る →",
+    hero_contact: "連絡する",
+    skill_prog: "プログラミング言語",
+    skill_ml: "分析・機械学習",
+    skill_viz: "可視化",
+    skill_other: "その他",
+    skill_lang: "語学",
+    skill_lang_items: "日本語（母語）· 英語（ビジネスレベル）· 中国語（基礎）",
+    contact_title: "お気軽にご連絡ください",
+    contact_desc: "インターンシップ・プロジェクト・その他のご機会についてお待ちしています。",
+    contact_email: "メールを送る",
+    modal_overview: "概要",
+    modal_challenge: "課題・取り組み",
+    modal_result: "成果",
+    modal_tech: "使用技術",
+    card_detail: "詳細を見る →",
+  }
+};
+
+// ── プロジェクトデータ ───────────────────────────────────────
+const projects = {
+  p1: {
+    en: {
+      label: "40.011 Data and Business Analytics",
+      title: "DOOH Advertising Analytics Dashboard",
+      desc: "Industry collaboration project focused on transforming advertising campaign data into actionable business insights through analytics and dashboard design.",
+      overview: "An industry-collaboration project conducted in the Data and Business Analytics module. Our team analyzed digital out-of-home advertising campaign data and developed dashboard-ready insights for business decision-making. Due to confidentiality, raw data, client details, and internal results are not publicly disclosed.",
+      challenge: "The main challenge was preparing messy operational data for analysis while ensuring consistency across different metrics. I focused on data cleaning and transformation using SQL before the data was used for dashboards and visual analytics.",
+      result: "Delivered a dashboard, poster, and final report as a team. My main contribution was preparing clean analytical datasets and creating visualizations such as cumulative trend graphs, weighted impression breakdowns, and arrondissement-level trend analysis.",
+    },
+    ja: {
+      label: "40.011 Data and Business Analytics",
+      title: "DOOHデジタル広告アナリティクスダッシュボード",
+      desc: "広告キャンペーンデータをビジネスインサイトへと変換することを目的とした、産学連携プロジェクト。",
+      overview: "Data and Business Analytics授業内の産学連携プロジェクトです。チームでデジタルOOH（屋外広告）のキャンペーンデータを分析し、経営判断に活用できるダッシュボード向けインサイトを開発しました。機密保持の観点から、生データ・クライアント情報・内部結果は非公開です。",
+      challenge: "分析に利用する運用データは複数のソースから収集されており、指標間の整合性を保ちながら分析可能な形へ整理する必要がありました。私はSQLを用いたデータクレンジングと前処理を担当し、可視化やダッシュボード開発の基盤となるデータセットを構築しました。データ品質の向上を通じて、より正確な分析とインサイト抽出に貢献しました。",
+      result: "チームとしてダッシュボード、ポスター、最終レポートを作成・提出しました。私は分析用データセットの構築と可視化を担当し、SQLによるデータ整備からトレンド分析までを一貫して実施しました。累積推移や地区別パフォーマンスの分析を通じて、広告キャンペーンの効果を把握するためのインサイト抽出を行いました。",
+    },
+    tags: ["SQL", "Python", "Data Cleaning", "Data Visualization", "Dashboard Design", "Business Analytics"],
+    github: null, demo: null
+  },
+
+  p2: {
+    en: {
+      label: "04.002 Optimization",
+      title: "Quantum Circuit Optimization",
+      desc: "Built a MILP-based optimization model to minimize SWAP operations in quantum circuit routing and compared different hardware topologies.",
+      overview: "A team-based optimization project that formulated quantum circuit routing as a Mixed-Integer Linear Programming problem. The goal was to minimize the number of SWAP operations required to execute two-qubit gates under hardware connectivity constraints.",
+      challenge: "Quantum gates can only be executed between adjacent physical qubits, so logical qubits must be routed through SWAP operations. The model needed to represent qubit placement, gate execution order, adjacency requirements, SWAP feasibility, and movement consistency.",
+      result: "Compared line and cube hardware topologies. The results showed that cube topologies generally require fewer SWAP operations due to higher connectivity, while solver time increases as the number of qubits grows.",
+    },
+    ja: {
+      label: "04.002 Optimization",
+      title: "量子回路ルーティングの最適化",
+      desc: "量子回路ルーティングにおけるSWAP操作数を最小化するMILPモデルを構築し、異なるハードウェアトポロジーの性能を比較。",
+      overview: "量子回路ルーティング問題を混合整数線形計画（MILP）として定式化したチームプロジェクトです。量子コンピュータのハードウェア接続制約のもと、2量子ビットゲートの実行に必要なSWAP操作数を最小化することを目的としました。私は主にJuliaとJuMPを用いた実装を担当し、モデルの構築と実験を行いました。",
+      challenge: "量子ゲートは隣接する物理量子ビット間でしか実行できないため、論理量子ビットを適切に移動させる必要があります。量子ビット配置、ゲート実行順序、隣接制約、SWAP実行可能性、移動の整合性といった複数の条件を同時に満たすモデルを構築することが大きな課題でした。",
+      result: "ライン型とキューブ型のハードウェアトポロジーを比較した結果、接続性の高いキューブ型では必要なSWAP操作数を削減できることを確認しました。一方で、量子ビット数の増加に伴い計算時間も大きく増加することが分かり、量子回路ルーティングにおけるスケーラビリティの課題についても考察しました。",
+    },
+    tags: ["Julia", "JuMP", "MILP", "Optimization", "Quantum Computing", "Operations Research"],
+    github: null, demo: null
+  },
+
+  p3: {
+    en: {
+      label: "Hobby Project",
+      title: "Cross-Language Music Recommendation System",
+      desc: "Developed a multilingual music recommendation system that helps language learners discover songs with similar moods across different languages.",
+      overview: "A multilingual music recommendation platform designed for language learners who want to discover songs in other languages with a similar mood or atmosphere to songs they already like.",
+      challenge: "Finding music across languages is difficult because users may not know the culture, artists, or search keywords of the target language. The system combines music metadata, audio feature extraction, and LLM-based reasoning to recommend similar songs.",
+      result: "Built a backend recommendation pipeline that accepts up to five input songs, target language, gender preference, and optional audio input. The system uses Spotify API, Librosa, LLM-based ranking, YouTube links, and thumbs-up/down feedback stored for future improvement.",
+    },
+    ja: {
+      label: "個人プロジェクト",
+      title: "雰囲気の似た多言語の曲提案",
+      desc: "語学学習者が好きな曲と似た雰囲気の曲を他言語から発見できる多言語音楽推薦システムを開発。",
+      overview: "語学学習者向けに、好みの曲と似たムードの楽曲を他言語から発見できる多言語音楽推薦プラットフォームです。",
+      challenge: "他言語の音楽を探すには、その文化・アーティスト・検索キーワードを知らないと難しいという課題があります。音楽メタデータ・音声特徴量抽出・LLMによるランキングを組み合わせて類似曲を推薦します。",
+      result: "最大5曲の入力曲・対象言語・性別・任意の音声入力を受け付けるバックエンドパイプラインを構築。Spotify API・Librosa・LLM・YouTubeリンク・フィードバック機能を実装しました。",
+    },
+    tags: ["Python", "Spotify API", "Librosa", "LLM", "Recommendation System", "Backend Development"],
+    github: null, demo: null
+  },
+
+  p4: {
+    en: {
+      label: "03.007 Design Thinking and Innovation",
+      title: "Smart Bird Deterrence System",
+      desc: "Designed a bird deterrence system combining computer vision, pan-tilt tracking, and directional audio to address hygiene issues on campus.",
+      overview: "A project-based module where our team designed a system to address hygiene issues caused by birds entering a semi-open university canteen area.",
+      challenge: "The system required coordination between computer vision, mechanical design, and audio hardware. A major challenge was redesigning the pan-tilt mechanism after realizing that different sub-teams had different assumptions about whether the device would be placed on the floor or mounted near the ceiling.",
+      result: "Developed a working prototype using YOLOv8-based bird detection, coordinate extraction, a pan-tilt mechanism, and a directional speaker. I mainly worked on the pan-tilt system and directional speaker, gaining hands-on experience with Arduino, servo motors, 3D printing, and hardware integration.",
+    },
+    ja: {
+      label: "03.007 Design Thinking and Innovation",
+      title: "スマート鳥害防止システム",
+      desc: "コンピュータビジョン・パンチルト追跡・指向性スピーカーを組み合わせた鳥害防止システムを設計・開発。",
+      overview: "大学内の半屋外食堂において、鳥の侵入による衛生問題を解決するために取り組んだチームプロジェクトです。YOLOv8による鳥検出とパンチルト機構、指向性スピーカーを組み合わせ、自動で鳥を検知・追跡・追い払うシステムの開発を行いました",
+      challenge: "本プロジェクトでは、コンピュータビジョン・機械設計・音響ハードウェアを統合する必要がありました。特に、パンチルト機構の設置位置についてチーム内で認識の違いがあり、設計途中で3Dプリント部品を再設計する必要がありました。また、指向性スピーカーの開発は未経験分野であったため、外部コミュニティから情報収集を行いながら試作と改善を繰り返しました。",
+      result: "YOLOv8による鳥検出と追跡機能を備えた鳥害防止システムのプロトタイプを完成させました。私はパンチルト機構と指向性スピーカーの開発を担当し、検出した鳥の方向へ自動で音を照射する仕組みを実装しました。ハードウェア開発だけでなく、異なる担当領域を持つメンバーとの連携やシステム統合にも取り組み、実践的なエンジニアリング経験を得ることができました。",
+    },
+    tags: ["Arduino", "Raspberry Pi", "YOLOv8", "Servo Motor", "3D Printing", "System Design"],
+    github: null, demo: null,
+    video: "https://youtu.be/LdWosgrLw4w"
+  }
+};
+
+// ── 言語切り替え ─────────────────────────────────────────────
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+  });
+  document.documentElement.lang = lang;
+  const t = i18n[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) {
+      // \n を改行として扱う（hero-titleなど）
+      if (t[key].includes('\n')) {
+        el.innerHTML = t[key].split('\n').map(line => `<div>${line}</div>`).join('');
+      } else {
+        el.textContent = t[key];
+      }
+    }
+  });
+  renderProjects();
+}
+
+function renderProjects() {
+  const grid = document.getElementById('projects-grid');
+  const t = i18n[currentLang];
+  grid.innerHTML = Object.entries(projects).map(([id, p]) => {
+    const d = p[currentLang];
+    return `
+      <div class="project-card" onclick="openModal('${id}')">
+        <div class="project-number">${d.label}</div>
+        <div class="project-title">${d.title}</div>
+        <div class="project-desc">${d.desc}</div>
+        <div class="project-tags">${p.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
+        <div class="project-arrow">${t.card_detail}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openModal(id) {
+  const p = projects[id];
+  if (!p) return;
+  const d = p[currentLang];
+  const t = i18n[currentLang];
+  const links = `
+    ${p.github ? `<a href="${p.github}" class="btn btn-outline" target="_blank">GitHub →</a>` : ''}
+    ${p.demo ? `<a href="${p.demo}" class="btn btn-primary" target="_blank">Demo →</a>` : ''}
+  `;
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-label">${d.label}</div>
+    <div class="modal-title">${d.title}</div>
+    <div class="modal-section-title">${t.modal_overview}</div>
+    <div class="modal-text">${d.overview}</div>
+    <div class="modal-section-title">${t.modal_challenge}</div>
+    <div class="modal-text">${d.challenge}</div>
+    <div class="modal-section-title">${t.modal_result}</div>
+    <div class="modal-text">${d.result}</div>
+    <div class="modal-section-title">${t.modal_tech}</div>
+    <div class="modal-tags">${p.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
+    ${(p.github || p.demo) ? `<div class="modal-links">${links}</div>` : ''}
+  `;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOnOverlay(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// 初期描画（英語）
+setLang('en');
+</script>
+</body>
+</html>
