@@ -371,6 +371,12 @@ function openModal(id) {
   if (!p) return;
   const d = p[currentLang];
   const t = i18n[currentLang];
+  const embedUrl = getEmbedUrl(p.video);
+  const videoHtml = embedUrl ? `
+    <div class="modal-section-title">${currentLang === 'ja' ? '紹介動画' : 'Demo Video'}</div>
+    <div class="modal-video">
+      <iframe src="${embedUrl}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+    </div>` : '';
   const links = `
     ${p.github ? `<a href="${p.github}" class="btn btn-outline" target="_blank">GitHub →</a>` : ''}
     ${p.demo ? `<a href="${p.demo}" class="btn btn-primary" target="_blank">Demo →</a>` : ''}
@@ -378,6 +384,7 @@ function openModal(id) {
   document.getElementById('modal-body').innerHTML = `
     <div class="modal-label">${d.label}</div>
     <div class="modal-title">${d.title}</div>
+    ${videoHtml}
     <div class="modal-section-title">${t.modal_overview}</div>
     <div class="modal-text">${d.overview}</div>
     <div class="modal-section-title">${t.modal_challenge}</div>
