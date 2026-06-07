@@ -6,87 +6,415 @@
 <title>Portfolio — Kanon Oishi</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d0f14; --surface: #161923; --surface2: #1e2434;
-    --border: rgba(255,255,255,0.07); --border-hover: rgba(255,255,255,0.15);
-    --text: #e8ecf5; --text-muted: #7a849a; --text-dim: #4a5368;
-    --accent: #5b8af0; --accent2: #3ecfa8;
-    --tag-bg: rgba(91,138,240,0.12); --tag-text: #7da4f5;
-    --mono: 'DM Mono', monospace; --sans: 'DM Sans', sans-serif;
+    --bg: #f5f7fa;
+    --surface: #ffffff;
+    --surface2: #edf1f7;
+    --border: rgba(42,92,143,0.12);
+    --border-hover: rgba(42,92,143,0.28);
+    --text: #1a2433;
+    --text-muted: #4a5a70;
+    --text-dim: #8a9ab0;
+    --accent: #2a5c8f;
+    --accent-light: #4a9eca;
+    --accent2: #1a8f6a;
+    --tag-bg: #d0e1f0;
+    --tag-text: #1a3d60;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --serif: 'Noto Serif JP', serif;
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.7; min-height: 100vh; }
-  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(91,138,240,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(91,138,240,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
 
-  nav { position: sticky; top: 0; z-index: 100; background: rgba(13,15,20,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 56px; }
-  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); letter-spacing: 0.05em; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* 細かいドットパターン（和紙風） */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(42,92,143,0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245,247,250,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    font-weight: 400;
+  }
+
   .nav-right { display: flex; align-items: center; gap: 2rem; }
+
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-size: 14px; color: var(--text-muted); text-decoration: none; font-family: var(--mono); transition: color 0.2s; }
-  .nav-links a:hover { color: var(--text); }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
 
-  .lang-switch { display: flex; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
-  .lang-btn { font-family: var(--mono); font-size: 12px; padding: 4px 12px; cursor: pointer; background: transparent; border: none; color: var(--text-muted); transition: all 0.15s; letter-spacing: 0.05em; }
+  .lang-switch {
+    display: flex;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .lang-btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 4px 12px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+  }
   .lang-btn.active { background: var(--accent); color: #fff; }
-  .lang-btn:not(.active):hover { color: var(--text); }
+  .lang-btn:not(.active):hover { color: var(--accent); }
 
+  /* ── Main ── */
   main { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 2rem; }
   section { padding: 5rem 0; }
   #hero { padding-top: 7rem; padding-bottom: 4rem; }
-  .hero-label { font-family: var(--mono); font-size: 12px; color: var(--accent2); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.2rem; }
-  .hero-name { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 0.3rem; color: var(--text); }
-  .hero-name span { color: var(--accent); font-weight: 500; }
-  .hero-title { font-family: var(--mono); font-size: 15px; color: var(--text-muted); margin-bottom: 2rem; line-height: 1.8; }
-  .hero-bio { max-width: 560px; font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 2.5rem; }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent2);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--accent2);
+  }
+
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    margin-bottom: 0.3rem;
+    color: var(--text);
+  }
+  .hero-name span { color: var(--accent); }
+
+  .hero-title {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    line-height: 2;
+    border-left: 2px solid var(--border-hover);
+    padding-left: 1rem;
+  }
+
+  .hero-bio {
+    max-width: 560px;
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.9;
+    margin-bottom: 2.5rem;
+  }
+
   .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
 
-  .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.4rem; border-radius: 6px; font-size: 14px; font-family: var(--mono); text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: var(--mono);
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    letter-spacing: 0.03em;
+  }
   .btn-primary { background: var(--accent); color: #fff; }
-  .btn-primary:hover { background: #7aa0f7; }
-  .btn-outline { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
-  .btn-outline:hover { color: var(--text); border-color: var(--border-hover); background: var(--surface); }
+  .btn-primary:hover { background: #1a4a7a; }
+  .btn-outline {
+    background: var(--surface);
+    color: var(--text-muted);
+    border: 1px solid var(--border-hover);
+  }
+  .btn-outline:hover { color: var(--accent); border-color: var(--accent); background: var(--surface2); }
 
-  .section-heading { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; }
-  .section-heading h2 { font-size: 13px; font-family: var(--mono); font-weight: 400; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
-  .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  /* ── Section heading ── */
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .section-heading h2 {
+    font-size: 11px;
+    font-family: var(--mono);
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .section-heading::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
 
-  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-  .skill-cell { background: var(--surface); padding: 1.2rem 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; transition: background 0.2s; }
+  /* ── Skills ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .skill-cell {
+    background: var(--surface);
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    transition: background 0.2s;
+  }
   .skill-cell:hover { background: var(--surface2); }
-  .skill-category { font-family: var(--mono); font-size: 11px; color: var(--accent2); letter-spacing: 0.1em; text-transform: uppercase; }
-  .skill-items { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+  .skill-category {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .skill-items { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
 
-  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
-  .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; gap: 0.8rem; }
-  .project-card:hover { border-color: var(--border-hover); background: var(--surface2); transform: translateY(-2px); }
-  .project-number { font-family: var(--mono); font-size: 11px; color: var(--text-dim); letter-spacing: 0.04em; }
-  .project-title { font-size: 16px; font-weight: 500; color: var(--text); line-height: 1.4; }
-  .project-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; flex: 1; }
+  /* ── Projects ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+    gap: 1.2rem;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .project-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(42,92,143,0.08);
+  }
+  .project-card:hover::before { opacity: 1; }
+
+  .project-number { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.1em; }
+  .project-title { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .project-desc { font-size: 13px; color: var(--text-muted); line-height: 1.75; flex: 1; }
   .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
-  .tag { font-family: var(--mono); font-size: 11px; padding: 3px 10px; border-radius: 4px; background: var(--tag-bg); color: var(--tag-text); letter-spacing: 0.03em; }
-  .project-arrow { font-family: var(--mono); font-size: 12px; color: var(--accent); margin-top: 0.5rem; }
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    letter-spacing: 0.02em;
+  }
+  .project-arrow { font-family: var(--mono); font-size: 12px; color: var(--accent); margin-top: 0.4rem; }
 
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; padding: 2rem; }
+  /* ── Modal ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,36,51,0.55);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
   .modal-overlay.open { display: flex; }
-  .modal { background: var(--surface); border: 1px solid var(--border-hover); border-radius: 14px; max-width: 680px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 2.5rem; position: relative; }
-  .modal-close { position: absolute; top: 1.2rem; right: 1.2rem; background: var(--surface2); border: 1px solid var(--border); color: var(--text-muted); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-family: var(--sans); }
-  .modal-close:hover { color: var(--text); border-color: var(--border-hover); }
-  .modal-label { font-family: var(--mono); font-size: 11px; color: var(--accent2); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.8rem; }
-  .modal-title { font-size: 22px; font-weight: 500; color: var(--text); line-height: 1.3; margin-bottom: 1.5rem; }
-  .modal-section-title { font-family: var(--mono); font-size: 12px; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; margin-top: 1.5rem; }
-  .modal-text { font-size: 15px; color: var(--text-muted); line-height: 1.8; }
-  .modal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
-  .modal-links { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.8rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
 
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border-hover);
+    border-radius: 14px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 2.5rem;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(42,92,143,0.15);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.2rem; right: 1.2rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-family: var(--sans);
+  }
+  .modal-close:hover { color: var(--accent); border-color: var(--accent); }
+
+  .modal-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .modal-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.35;
+    margin-bottom: 1.5rem;
+  }
+  .modal-section-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .modal-text { font-size: 14px; color: var(--text-muted); line-height: 1.85; }
+  .modal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
+  .modal-links {
+    display: flex; gap: 0.8rem; flex-wrap: wrap;
+    margin-top: 1.8rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Video embed */
+  .modal-video {
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+  }
+  .modal-video iframe { width: 100%; height: 100%; border: none; display: block; }
+
+  /* ── Contact ── */
   #contact { padding-bottom: 6rem; }
-  .contact-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 3rem; text-align: center; }
-  .contact-box h3 { font-size: 22px; font-weight: 400; margin-bottom: 0.8rem; }
-  .contact-box p { color: var(--text-muted); font-size: 15px; margin-bottom: 2rem; }
+  .contact-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  }
+  .contact-box h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+  }
+  .contact-box p { color: var(--text-muted); font-size: 14px; margin-bottom: 2rem; }
   .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
 
-  footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 1.5rem 2rem; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--text-dim); }
+  /* ── Footer ── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
 </style>
 </head>
 <body>
@@ -124,19 +452,19 @@
     <div class="skills-grid">
       <div class="skill-cell">
         <div class="skill-category" data-i18n="skill_prog"></div>
-        <div class="skill-items">Python · SQL · Julia · R · HTML/CSS</div>
+        <div class="skill-items">Python · SQL · R · HTML/CSS</div>
       </div>
       <div class="skill-cell">
         <div class="skill-category" data-i18n="skill_ml"></div>
-        <div class="skill-items">pandas · scikit-learn · NumPy · PyTorch</div>
+        <div class="skill-items">pandas · scikit-learn · NumPy</div>
       </div>
       <div class="skill-cell">
         <div class="skill-category" data-i18n="skill_viz"></div>
-        <div class="skill-items">Matplotlib · Seaborn </div>
+        <div class="skill-items">Matplotlib · Seaborn · Plotly · Tableau</div>
       </div>
       <div class="skill-cell">
         <div class="skill-category" data-i18n="skill_other"></div>
-        <div class="skill-items">Jupyter · Google Colab · Excel · Canva</div>
+        <div class="skill-items">Jupyter · Google Colab · Excel</div>
       </div>
       <div class="skill-cell">
         <div class="skill-category" data-i18n="skill_lang"></div>
@@ -176,59 +504,41 @@
 </div>
 
 <script>
-// ── UI テキスト ──────────────────────────────────────────────
 const i18n = {
   en: {
-    nav_skills: "skills",
-    nav_projects: "projects",
-    nav_contact: "contact",
+    nav_skills: "skills", nav_projects: "projects", nav_contact: "contact",
     hero_label: "Data Analytics · Engineering Systems",
     hero_title: "// Singapore University of Technology and Design (SUTD)\n// Major: Engineering Systems and Design",
-    hero_bio: "I am an Engineering Systems and Design student at SUTD with interests in data analytics, optimization, and business problem solving. Through academic and industry projects, I have worked on transforming real-world data into business-focused insights.",
-    hero_cta: "Projects →",
-    hero_contact: "Contacts",
-    skill_prog: "Programming Languages",
-    skill_ml: "Analytics · ML",
-    skill_viz: "Visualisation",
-    skill_other: "Others",
-    skill_lang: "Languages",
+    hero_bio: "I am an Engineering Systems and Design student at the Singapore University of Technology and Design (SUTD) with interests in data analytics, optimization, and technology-driven problem solving. My journey has taken me from Japan to the Philippines and now Singapore, where I have experienced different educational systems, cultures, and ways of thinking. These experiences sparked my curiosity about how complex systems work and how data can be used to make better decisions. Throughout my studies, I have worked on cross-functional projects spanning data analytics, optimization, and system development. I enjoy tackling challenges that sit at the intersection of technology, people, and real-world applications. I am particularly interested in transforming data into actionable insights and designing solutions that make technology more useful and accessible.",
+    hero_cta: "Projects →", hero_contact: "Contacts",
+    skill_prog: "Programming Languages", skill_ml: "Analytics · ML",
+    skill_viz: "Visualisation", skill_other: "Others", skill_lang: "Languages",
     skill_lang_items: "Japanese (Native) · English (Business) · Mandarin (Basic)",
     contact_title: "Get in Touch",
     contact_desc: "Please feel free to contact me regarding internships, projects, or other opportunities.",
     contact_email: "Send an email",
-    modal_overview: "Project Overview",
-    modal_challenge: "Challenges & Approach",
-    modal_result: "Outcomes",
-    modal_tech: "Technology Used",
-    card_detail: "See detail →",
+    modal_overview: "Project Overview", modal_challenge: "Challenges & Approach",
+    modal_result: "Outcomes", modal_tech: "Technology Used",
+    modal_video: "Demo Video", card_detail: "See detail →",
   },
   ja: {
-    nav_skills: "スキル",
-    nav_projects: "プロジェクト",
-    nav_contact: "お問い合わせ",
+    nav_skills: "スキル", nav_projects: "プロジェクト", nav_contact: "お問い合わせ",
     hero_label: "データアナリティクス · エンジニアリングシステム",
     hero_title: "// シンガポール工科デザイン大学（SUTD）\n// 専攻：エンジニアリングシステムデザイン",
-    hero_bio: "SUTDでエンジニアリングシステムとデザインを専攻しています。データアナリティクス・最適化・ビジネス課題の解決に興味があり、学術・産学連携プロジェクトを通じて、実データをビジネスに活かすインサイトの導出に取り組んできました。",
-    hero_cta: "プロジェクトを見る →",
-    hero_contact: "連絡する",
-    skill_prog: "プログラミング言語",
-    skill_ml: "分析・機械学習",
-    skill_viz: "可視化",
-    skill_other: "その他",
-    skill_lang: "語学",
+    hero_bio: "私はシンガポール工科デザイン大学（SUTD）でEngineering Systems and Designを専攻しており、データ分析、最適化、そしてテクノロジーを活用した課題解決に関心を持っています。日本で育ち、高校時代にフィリピンのIB校へ転校し、現在はシンガポールで学んでいます。異なる国や教育環境を経験する中で、「複雑な仕組みを理解し、より良い意思決定につなげるにはどうすればよいか」ということに興味を持つようになりました。これまでに広告分析、最適化、システム開発など、多様なプロジェクトに取り組んできました。技術そのものだけでなく、人や社会との接点を意識しながら、実際の課題を解決することに面白さを感じています。将来的には、データとテクノロジーを活用し、より良い意思決定や新たな価値創出を支援できる人材を目指しています。",
+    hero_cta: "プロジェクトを見る →", hero_contact: "連絡する",
+    skill_prog: "プログラミング言語", skill_ml: "分析・機械学習",
+    skill_viz: "可視化", skill_other: "その他", skill_lang: "語学",
     skill_lang_items: "日本語（母語）· 英語（ビジネスレベル）· 中国語（基礎）",
     contact_title: "お気軽にご連絡ください",
     contact_desc: "インターンシップ・プロジェクト・その他のご機会についてお待ちしています。",
     contact_email: "メールを送る",
-    modal_overview: "概要",
-    modal_challenge: "課題・取り組み",
-    modal_result: "成果",
-    modal_tech: "使用技術",
-    card_detail: "詳細を見る →",
+    modal_overview: "概要", modal_challenge: "課題・取り組み",
+    modal_result: "成果", modal_tech: "使用技術",
+    modal_video: "紹介動画", card_detail: "詳細を見る →",
   }
 };
 
-// ── プロジェクトデータ ───────────────────────────────────────
 const projects = {
   p1: {
     en: {
@@ -244,13 +554,12 @@ const projects = {
       title: "DOOHデジタル広告アナリティクスダッシュボード",
       desc: "広告キャンペーンデータをビジネスインサイトへと変換することを目的とした、産学連携プロジェクト。",
       overview: "Data and Business Analytics授業内の産学連携プロジェクトです。チームでデジタルOOH（屋外広告）のキャンペーンデータを分析し、経営判断に活用できるダッシュボード向けインサイトを開発しました。機密保持の観点から、生データ・クライアント情報・内部結果は非公開です。",
-      challenge: "分析に利用する運用データは複数のソースから収集されており、指標間の整合性を保ちながら分析可能な形へ整理する必要がありました。私はSQLを用いたデータクレンジングと前処理を担当し、可視化やダッシュボード開発の基盤となるデータセットを構築しました。データ品質の向上を通じて、より正確な分析とインサイト抽出に貢献しました。",
-      result: "チームとしてダッシュボード、ポスター、最終レポートを作成・提出しました。私は分析用データセットの構築と可視化を担当し、SQLによるデータ整備からトレンド分析までを一貫して実施しました。累積推移や地区別パフォーマンスの分析を通じて、広告キャンペーンの効果を把握するためのインサイト抽出を行いました。",
+      challenge: "分析に利用する運用データは複数のソースから収集されており、指標間の整合性を保ちながら分析可能な形へ整理する必要がありました。私はSQLを用いたデータクレンジングと前処理を担当し、可視化やダッシュボード開発の基盤となるデータセットを構築しました。",
+      result: "チームとしてダッシュボード、ポスター、最終レポートを作成・提出しました。私は分析用データセットの構築と可視化を担当し、SQLによるデータ整備からトレンド分析までを一貫して実施しました。",
     },
     tags: ["SQL", "Python", "Data Cleaning", "Data Visualization", "Dashboard Design", "Business Analytics"],
-    github: null, demo: null
+    github: null, demo: null, video: null
   },
-
   p2: {
     en: {
       label: "04.002 Optimization",
@@ -264,14 +573,13 @@ const projects = {
       label: "04.002 Optimization",
       title: "量子回路ルーティングの最適化",
       desc: "量子回路ルーティングにおけるSWAP操作数を最小化するMILPモデルを構築し、異なるハードウェアトポロジーの性能を比較。",
-      overview: "量子回路ルーティング問題を混合整数線形計画（MILP）として定式化したチームプロジェクトです。量子コンピュータのハードウェア接続制約のもと、2量子ビットゲートの実行に必要なSWAP操作数を最小化することを目的としました。私は主にJuliaとJuMPを用いた実装を担当し、モデルの構築と実験を行いました。",
+      overview: "量子回路ルーティング問題を混合整数線形計画（MILP）として定式化したチームプロジェクトです。量子コンピュータのハードウェア接続制約のもと、2量子ビットゲートの実行に必要なSWAP操作数を最小化することを目的としました。",
       challenge: "量子ゲートは隣接する物理量子ビット間でしか実行できないため、論理量子ビットを適切に移動させる必要があります。量子ビット配置、ゲート実行順序、隣接制約、SWAP実行可能性、移動の整合性といった複数の条件を同時に満たすモデルを構築することが大きな課題でした。",
-      result: "ライン型とキューブ型のハードウェアトポロジーを比較した結果、接続性の高いキューブ型では必要なSWAP操作数を削減できることを確認しました。一方で、量子ビット数の増加に伴い計算時間も大きく増加することが分かり、量子回路ルーティングにおけるスケーラビリティの課題についても考察しました。",
+      result: "ライン型とキューブ型のハードウェアトポロジーを比較した結果、接続性の高いキューブ型では必要なSWAP操作数を削減できることを確認しました。一方で、量子ビット数の増加に伴い計算時間も大きく増加することが分かりました。",
     },
-    tags: ["Julia", "JuMP", "MILP", "Optimization", "Operations Research"],
-    github: null, demo: null
+    tags: ["Julia", "JuMP", "MILP", "Optimization", "Quantum Computing", "Operations Research"],
+    github: null, demo: null, video: null
   },
-
   p3: {
     en: {
       label: "Hobby Project",
@@ -290,9 +598,8 @@ const projects = {
       result: "最大5曲の入力曲・対象言語・性別・任意の音声入力を受け付けるバックエンドパイプラインを構築。Spotify API・Librosa・LLM・YouTubeリンク・フィードバック機能を実装しました。",
     },
     tags: ["Python", "Spotify API", "Librosa", "LLM", "Recommendation System", "Backend Development"],
-    github: null, demo: null
+    github: null, demo: null, video: null
   },
-
   p4: {
     en: {
       label: "03.007 Design Thinking and Innovation",
@@ -306,9 +613,9 @@ const projects = {
       label: "03.007 Design Thinking and Innovation",
       title: "スマート鳥害防止システム",
       desc: "コンピュータビジョン・パンチルト追跡・指向性スピーカーを組み合わせた鳥害防止システムを設計・開発。",
-      overview: "大学内の半屋外食堂において、鳥の侵入による衛生問題を解決するために取り組んだチームプロジェクトです。YOLOv8による鳥検出とパンチルト機構、指向性スピーカーを組み合わせ、自動で鳥を検知・追跡・追い払うシステムの開発を行いました",
+      overview: "大学内の半屋外食堂において、鳥の侵入による衛生問題を解決するために取り組んだチームプロジェクトです。YOLOv8による鳥検出とパンチルト機構、指向性スピーカーを組み合わせ、自動で鳥を検知・追跡・追い払うシステムの開発を行いました。",
       challenge: "本プロジェクトでは、コンピュータビジョン・機械設計・音響ハードウェアを統合する必要がありました。特に、パンチルト機構の設置位置についてチーム内で認識の違いがあり、設計途中で3Dプリント部品を再設計する必要がありました。また、指向性スピーカーの開発は未経験分野であったため、外部コミュニティから情報収集を行いながら試作と改善を繰り返しました。",
-      result: "YOLOv8による鳥検出と追跡機能を備えた鳥害防止システムのプロトタイプを完成させました。私はパンチルト機構と指向性スピーカーの開発を担当し、検出した鳥の方向へ自動で音を照射する仕組みを実装しました。ハードウェア開発だけでなく、異なる担当領域を持つメンバーとの連携やシステム統合にも取り組み、実践的なエンジニアリング経験を得ることができました。",
+      result: "YOLOv8による鳥検出と追跡機能を備えた鳥害防止システムのプロトタイプを完成させました。私はパンチルト機構と指向性スピーカーの開発を担当し、検出した鳥の方向へ自動で音を照射する仕組みを実装しました。",
     },
     tags: ["Arduino", "Raspberry Pi", "YOLOv8", "Servo Motor", "3D Printing", "System Design"],
     github: null, demo: null,
@@ -316,7 +623,6 @@ const projects = {
   }
 };
 
-// ── 言語切り替え ─────────────────────────────────────────────
 let currentLang = 'en';
 
 function setLang(lang) {
@@ -329,7 +635,6 @@ function setLang(lang) {
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) {
-      // \n を改行として扱う（hero-titleなど）
       if (t[key].includes('\n')) {
         el.innerHTML = t[key].split('\n').map(line => `<div>${line}</div>`).join('');
       } else {
@@ -373,7 +678,7 @@ function openModal(id) {
   const t = i18n[currentLang];
   const embedUrl = getEmbedUrl(p.video);
   const videoHtml = embedUrl ? `
-    <div class="modal-section-title">${currentLang === 'ja' ? '紹介動画' : 'Demo Video'}</div>
+    <div class="modal-section-title">${t.modal_video}</div>
     <div class="modal-video">
       <iframe src="${embedUrl}" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
     </div>` : '';
@@ -402,13 +707,14 @@ function openModal(id) {
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  const iframe = document.querySelector('.modal-video iframe');
+  if (iframe) iframe.src = iframe.src;
 }
 function closeModalOnOverlay(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-// 初期描画（英語）
 setLang('en');
 </script>
 </body>
